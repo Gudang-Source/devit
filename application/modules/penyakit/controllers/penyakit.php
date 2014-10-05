@@ -7,11 +7,6 @@ class Penyakit extends CI_Controller {
 		parent:: __construct();
 		$this->load->model('penyakit_model');
 		$this->load->helper('number');
-		if (!$this->session->userdata('id'))
-		{
-			show_404();
-			exit;
-		}
 	}
 
 	function index()
@@ -151,6 +146,8 @@ class Penyakit extends CI_Controller {
 		$this->pdf->SetFont("helvetica", "", 12);
 		
 		$item = (array) $this->penyakit_model->get_penyakit($id);
+		$item['gejala'] = $this->penyakit_model->get_gejala($item['penyakit']);
+		$item['solusi'] = $this->penyakit_model->get_solusi($item['penyakit']);
 		$html = $this->load->view('printout', $item, TRUE);	
 		$this->pdf->writeHTML($html, true, false, false, false, '');
 		$this->pdf->Output('output.pdf', 'I');

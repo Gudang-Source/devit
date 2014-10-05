@@ -6,11 +6,6 @@ class Aturan extends CI_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('aturan_model');
-		if (!$this->session->userdata('id'))
-		{
-			show_404();
-			exit;
-		}
 	}
 
 	function index()

@@ -8,7 +8,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row">
-					<?php echo form_open('diagnosa', 'class="form-horizontal"')?>
+					<?php echo form_open('diagnosa/check', 'class="form-horizontal"')?>
 					<div class="col-lg-6">
 						<div class="form-group">
 							 <label class="col-lg-4">No<span class="text-danger">*</span></label>

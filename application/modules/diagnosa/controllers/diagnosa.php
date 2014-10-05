@@ -9,14 +9,17 @@ class Diagnosa extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->helper('date');
 		$this->load->model('diagnosa_model');
-		if (!$this->session->userdata('id'))
-		{
-			show_404();
-			exit;
-		}
+	}
+	
+	function index()
+	{
+		$item['result'] = $this->diagnosa_model->grid();
+		$data['content'] = $this->load->view('datagrid', $item, TRUE);
+		$data['script'] = $this->load->view('grid_js', '', TRUE);
+		$this->load->view('template', $data);
 	}
 
-	function index()
+	function check()
 	{
 		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
 		$this->form_validation->set_rules('nama', 'nama', 'required');
@@ -46,22 +49,33 @@ class Diagnosa extends CI_Controller {
 	{
 		$penyakit = $this->diagnosa_model->get_penyakit();
 		$abc = $this->diagnosa_model->get_data($res);
-		echo "No Diagnosa => ".$abc->no_diagnosa."<br>";	
-		echo "ID Pasien => ".$abc->id_pasien."<br>";
-		echo "ID Gejala => ".$abc->gejala."<br>";
-		$id_gejala = explode('|', $abc->gejala);
+		$id_gejala = explode('|', $abc['gejala']);
 		$sum = count($id_gejala)-1;
 		
 		foreach($penyakit as $row)
 		{
-			$temp = '0';
+			$temp = 0;
 			for($i=1; $i<=$sum; $i++)
 			{
 				$cf = $this->diagnosa_model->get_cf($row->id, $id_gejala[$i]);
-				$temp += $cf++; 
+				$temp += $cf++;
 			}
-			echo $row->id." = ".$temp."<br>";
+			$save['no_diagnosa'] = $abc['no_diagnosa'];
+			$save['id_pasien'] = $abc['id_pasien'];
+			$save['id_penyakit'] = $row->id;
+			$save['skor'] = $temp;
+			$this->diagnosa_model->save_matrix($save);
 		}
+		$update['hasil'] = $this->diagnosa_model->get_skor($abc['no_diagnosa']);
+		$this->diagnosa_model->update_hasil($update, $abc['no_diagnosa']);
+		redirect('diagnosa/hasil/'.$abc['no_diagnosa']);
+	}
+	
+	function hasil($res)
+	{
+		$item = (array) $this->diagnosa_model->get_data2($res);
+		$data['content'] = $this->load->view('result', $item, TRUE);
+		$this->load->view('template', $data);
 	}
 
 }

@@ -89,7 +89,7 @@ class Auth extends CI_Controller {
 	{
 		$this->session->set_flashdata('alert', '<div class="alert alert-info"><i class="fa fa-check-circle"></i> You have successfuly logout</div>');
 		$this->session->unset_userdata('id');
-		redirect('auth');
+		redirect('beranda');
 	}	
 
 }

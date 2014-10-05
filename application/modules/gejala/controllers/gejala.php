@@ -7,11 +7,6 @@ class Gejala extends CI_Controller {
 		parent:: __construct();
 		$this->load->model('gejala_model');
 		$this->load->helper('number');
-		if (!$this->session->userdata('id'))
-		{
-			show_404();
-			exit;
-		}
 	}
 
 	function index()

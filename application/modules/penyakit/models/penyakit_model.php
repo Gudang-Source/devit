@@ -10,6 +10,7 @@ class Penyakit_model extends CI_Model {
 	
 	function get_penyakit($id)
 	{
+		
 		$query = $this->db->get_where('penyakit', array('id'=>$id));
 		return $query->row();
 	}
@@ -31,6 +32,18 @@ class Penyakit_model extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->delete('penyakit');
 		$this->session->set_flashdata('alert', '<div class="alert alert-warning"><i class="fa fa-check-circle"></i> Data telah dihapus</div>');
+	}
+	
+	function get_gejala($xx)
+	{
+		$r = $this->db->get_where('mt_relasi', array('penyakit'=>$xx));
+		return $r->result();
+	}
+	
+	function get_solusi($xx)
+	{
+		$r = $this->db->get_where('mt_aturan', array('penyakit'=>$xx));
+		return $r->result();
 	}
 	
 }

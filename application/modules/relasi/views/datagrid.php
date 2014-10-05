@@ -19,7 +19,9 @@
                                 <th>Pengakit</th>
                                 <th>Gejala</th>
                                 <th>CF</th>
-                                <th class="col-lg-1">Aksi</th>
+                                <?php if($this->session->userdata('id')) { ?>
+                            		<th class="col-lg-1">Aksi</th>    	
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,13 +31,15 @@
                                 <td><?php echo $row->penyakit; ?></td>
                                 <td><?php echo $row->gejala; ?></td>
                                 <td><?php echo $row->cf; ?></td>
-                                <td class="center col-lg-1">
-                                   	<?php
-                            			echo anchor('relasi/form/'.$row->id, '<i class="fa fa-edit"></i>', 'class="btn btn-xs" title="Edit"');
-                            			echo '<a href="'.base_url().'relasi/delete_rule/'.$row->id.'" onclick="return confirmModal(\'Anda akan menghapus?\',\''.base_url().'relasi/delete_rule/'.$row->id.'\')" class="btn btn-xs" title="Hapus"><i class="fa fa-trash-o"></i></a>'; 
-									?>
-                                </td>
-							</tr>
+                                <?php if($this->session->userdata('id')) { ?>
+                            		<td class="center">
+	                                	<?php
+											echo anchor('relasi/form/'.$row->id, '<i class="fa fa-edit"></i>', 'class="btn btn-xs" title="Edit"');
+                            				echo '<a href="'.base_url().'relasi/delete_rule/'.$row->id.'" onclick="return confirmModal(\'Anda akan menghapus?\',\''.base_url().'relasi/delete_rule/'.$row->id.'\')" class="btn btn-xs" title="Hapus"><i class="fa fa-trash-o"></i></a>';	
+										?>
+									</td>    	
+                                <?php } ?>
+                            </tr>
 							<?php endforeach; ?>
                  		</tbody>
                     </table>

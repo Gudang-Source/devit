@@ -28,4 +28,28 @@
 		<td>:</td>
 		<td><?php echo $deskripsi; ?></td>
 	</tr>
+	<tr>
+		<td>Gejala</td>
+		<td>:</td>
+		<td>
+			<?php
+				foreach ($gejala as $row)
+				{
+					echo "* ".$row->gejala."<br>";
+				}
+			?>
+		</td>
+	</tr>
+	<tr>
+		<td>Solusi</td>
+		<td>:</td>
+		<td>
+			<?php
+				foreach ($solusi as $row)
+				{
+					echo "* ".$row->solusi."<br>";
+				}
+			?>
+		</td>
+	</tr>
 </table>

@@ -28,16 +28,20 @@
 				<?php echo anchor('', img('assets/img/logo.png'), 'class="navbar-brand"'); ?>
             </div>
 			<ul class="nav navbar-top-links navbar-right">
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <?php echo $this->session->userdata('nama'); ?>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                       	<li><?php echo anchor('auth/profile', '<i class="fa fa-user fa-fw"></i> User Profile'); ?></li>
-                        <li class="divider"></li>
-						<li><?php echo anchor('auth/logout', '<i class="fa fa-sign-out fa-fw"></i> Logout'); ?></li>
-                    </ul>
-				</li>
+				<?php if (!$this->session->userdata('id')) { ?>
+					<li><?php echo anchor('auth', '<i class="fa fa-sign-in fa-fw"></i> Login'); ?></li>
+				<?php } else { ?>
+					<li class="dropdown">
+	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	                        <i class="fa fa-user fa-fw"></i> <?php echo $this->session->userdata('nama'); ?>  <i class="fa fa-caret-down"></i>
+	                    </a>
+	                    <ul class="dropdown-menu dropdown-user">
+	                       	<li><?php echo anchor('auth/profile', '<i class="fa fa-user fa-fw"></i> User Profile'); ?></li>
+	                        <li class="divider"></li>
+							<li><?php echo anchor('auth/logout', '<i class="fa fa-sign-out fa-fw"></i> Logout'); ?></li>
+	                    </ul>
+					</li>						
+				<?php } ?>
 			</ul>
          	<div class="navbar-default navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
@@ -49,7 +53,9 @@
                         <li><?php echo anchor('solusi', '<i class="fa fa-stethoscope fa-fw"></i> Solusi'); ?></li>
 						<li><?php echo anchor('relasi', '<i class="fa fa-stethoscope fa-fw"></i> Relasi'); ?></li>
 						<li><?php echo anchor('aturan', '<i class="fa fa-stethoscope fa-fw"></i> Aturan'); ?></li>
-						<li><?php echo anchor('laporan', '<i class="fa fa-print fa-fw"></i> Laporan'); ?></li>
+						<?php if ($this->session->userdata('id')) { ?>
+							<li><?php echo anchor('laporan', '<i class="fa fa-print fa-fw"></i> Laporan'); ?></li>
+						<? } ?>
 					</ul>
                 </div>
             </div>

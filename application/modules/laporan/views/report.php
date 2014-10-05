@@ -4,7 +4,7 @@
 			<?php $this->pdf->SetFont("helvetica", "", 10); ?>
 			<br />
 			<p>
-				<strong><?php echo $title; ?></strong><br />
+				<strong>Data Hasil Konsultasi</strong><br />
 				Periode<br />
 				<?php
 					$no =1; 
@@ -17,23 +17,23 @@
 <br />
 <table cellspacing="2" cellpadding="5" border="1">
 	<tr>
-		<th align="center" width="5%"><strong>No</strong></th>
-		<th align="center" width="15%"><strong>Tanggal</strong></th>
-		<th align="center" width="15%"><strong>Waktu</strong></th>
-		<th align="center" width="5%"><strong>L/ P</strong></th>
-		<th align="center" width="16%"><strong>Bobot/ Panjang</strong></th>
-		<th align="center" width="18%"><strong>Pasien</strong></th>
-		<th align="center" width="26%"><strong>Alamat</strong></th>
-	</tr>
+		<th class="col-lg-2">No. Diagnosa</th>
+        <th>Nama</th>
+        <th>Kelompok</th>
+        <th>Diagnosa</th>
+        <th>Tanggal</th>
+    </tr>
 	<?php foreach($source as $row) : ?>
-	<tr>
-		<td align="center"><?php echo $no++; ?></td>
-		<td align="center"><?php echo format_dmy($row->tanggal); ?></td>
-		<td align="center"><?php echo $row->waktu; ?></td>
-		<td align="center"><?php echo $row->jk; ?></td>
-		<td align="center"><?php echo $row->berat."gr/ ".$row->panjang."cm"; ?></td>
-		<td><?php echo $row->pasien; ?></td>
-		<td><?php echo $row->alamat; ?></td>
+    <tr>
+    	<?php
+			$r = $this->db->get_where('matrix', array('no_diagnosa'=>$row->no_diagnosa, 'skor'=>$this->laporan_model->get_skor($row->no_diagnosa)))->row_array();
+			$k = $this->db->get_where('penyakit', array('id'=>$r['id_penyakit']))->row_array();
+		?>
+		<td><?php echo $row->no_diagnosa; ?></td>
+        <td><?php echo $row->nama; ?></td>
+        <td><?php echo $row->kelompok; ?></td>
+        <td><?php echo $k['penyakit']; ?></td>        
+        <td><?php echo format_dmy($row->tanggal); ?></td>
 	</tr>
 	<?php endforeach; ?>
 </table>

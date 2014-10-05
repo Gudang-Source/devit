@@ -6,11 +6,6 @@ class Relasi extends CI_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('relasi_model');
-		if (!$this->session->userdata('id'))
-		{
-			show_404();
-			exit;
-		}
 	}
 
 	function index()

@@ -23,29 +23,16 @@ class Laporan extends CI_Controller {
 	
 	function printout()
 	{
-		$status = $this->input->post('status');
 		$tgl = explode(' - ', $this->input->post('tanggal'));
 		
 		$this->load->library('pdf');
-		$this->pdf->SetHeaderData('slide.jpg', 9, 'UNIT RAWAT JALAN RS BUDILUHUR', 'RS. Budi Luhur Jl. Kebon Pelok/ Pramuka Kecamatan Harjamukti - Kota Cirebon');
+		$this->pdf->SetHeaderData('slide.jpg', 9, 'SAUNG AL-BAROKAH', 'Majalengka');
 		$this->pdf->AddPage();
 		$this->pdf->SetFont('helvetica', '', 8);
 		
-		switch ($status)
-		{
-			case 'N':
-				$item['title'] = 'DATA PERSALINAN NORMAL';
-				$item['periode'] = $this->input->post('tanggal');
-				$item['source'] = $this->laporan_model->get_data($status, format_ymd($tgl[1]), format_ymd($tgl[0]));
-				$html = $this->load->view('report', $item, TRUE);	
-			break;
-			case 'C':
-				$item['title'] = 'DATA PERSALINAN SESAR';
-				$item['periode'] = $this->input->post('tanggal');
-				$item['source'] = $this->laporan_model->get_data($status, format_ymd($tgl[1]), format_ymd($tgl[0]));
-				$html = $this->load->view('report', $item, TRUE);  
-			break;
-		}
+		$item['periode'] = $this->input->post('tanggal');
+		$item['source'] = $this->laporan_model->get_data(format_ymd($tgl[1]), format_ymd($tgl[0]));
+		$html = $this->load->view('report', $item, TRUE);
 				
 		$this->pdf->writeHTML($html, true, false, false, false, '');
 		$this->pdf->Output('output.pdf', 'I');
